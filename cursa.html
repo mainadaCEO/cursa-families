@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Cursa de Famílies</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    h1 { text-align: center; margin-bottom: 30px; }
+    .lane { display: flex; align-items: center; margin-bottom: 30px; }
+    .family-name { width: 150px; font-weight: bold; }
+    .track-container { flex: 1; position: relative; height: 40px; background: #ddd; border-radius: 20px; margin: 0 20px; }
+    .car { position: absolute; top: 50%; transform: translateY(-50%); font-size: 24px; transition: left 2s ease-in-out; }
+    .points { width: 50px; text-align: right; font-weight: bold; }
+    button { display: block; margin: 0 auto 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🏁 Rànquing de la Cursa de Famílies - Menuts 🏁</h1>
+
+  <button onclick="animateRace()">🏎️ Començar cursa</button>
+  <div id="lanes"></div>
+
+  <script>
+    let families = [];
+    const lanesDiv = document.getElementById("lanes");
+
+    // 📊 Enllaç al vostre Google Sheet en format CSV
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?output=csv";
+
+    async function loadFamilies() {
+      const resposta = await fetch(sheetUrl);
+      const text = await resposta.text();
+
+      const files = text.trim().split("\n"); // línies
+      const headers = files[0].split(",");   // capçaleres
+
+      families = files.slice(1).map(linea => {
+        const [name, points, color] = linea.split(",");
+        return {
+          name: name.trim(),
+          points: parseInt(points.trim()) || 0,
+          color: color ? color.trim() : "#000000"
+        };
+      });
+
+      createLanes(families);
+    }
+
+    function createLanes(families) {
+      lanesDiv.innerHTML = "";
+      families.forEach(fam => {
+        const lane = document.createElement("div");
+        lane.className = "lane";
+
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "family-name";
+        nameDiv.textContent = fam.name;
+
+        const trackContainer = document.createElement("div");
+        trackContainer.className = "track-container";
+
+        const car = document.createElement("i");
+        car.className = "fas fa-car car";
+        car.style.color = fam.color;
+        car.style.left = "0%";
+
+        trackContainer.appendChild(car);
+
+        const pointsDiv = document.createElement("div");
+        pointsDiv.className = "points";
+        pointsDiv.textContent = fam.points;
+
+        lane.appendChild(nameDiv);
+        lane.appendChild(trackContainer);
+        lane.appendChild(pointsDiv);
+
+        lanesDiv.appendChild(lane);
+      });
+    }
+
+    function animateRace() {
+      const maxPoints = Math.max(...families.map(f => f.points)) || 1;
+      const tracks = document.querySelectorAll(".track-container");
+      tracks.forEach((track, index) => {
+        const car = track.querySelector(".car");
+        const fam = families[index];
+        car.style.left = `${(fam.points / maxPoints) * 100}%`;
+      });
+    }
+
+    // Carregar dades inicialment i refrescar cada 30s
+    loadFamilies();
+    setInterval(loadFamilies, 30000);
+  </script>
+</body>
+</html>
