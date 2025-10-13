@@ -5,46 +5,175 @@
   <title>Cursa de Famílies</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
-    h1 { text-align: center; margin-bottom: 30px; }
-    .lane { display: flex; align-items: center; margin-bottom: 30px; }
-    .family-name { width: 150px; font-weight: bold; }
-    .track-container { flex: 1; position: relative; height: 40px; background: #ddd; border-radius: 20px; margin: 0 20px; }
-    .car { position: absolute; top: 50%; transform: translateY(-50%); font-size: 24px; transition: left 2s ease-in-out; }
-    .points { width: 50px; text-align: right; font-weight: bold; }
-    button { display: block; margin: 0 auto 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #fefefe, #e0e0e0);
+      padding: 20px;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    /* 🏁 Banderoles decoratives */
+    .banner {
+      width: 100%;
+      height: 40px;
+      background: repeating-linear-gradient(
+        45deg,
+        #000 0,
+        #000 20px,
+        #fff 20px,
+        #fff 40px
+      );
+      margin-bottom: 20px;
+      border-top: 3px solid #000;
+      border-bottom: 3px solid #000;
+      position: relative;
+    }
+
+    #menu {
+      margin-bottom: 20px;
+    }
+    button {
+      margin: 6px;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      transition: background 0.2s, transform 0.1s;
+    }
+    button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+    .active {
+      background-color: #28a745 !important;
+    }
+
+    .lane {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .family-name {
+      width: 150px;
+      font-weight: bold;
+    }
+    .track-container {
+      flex: 1;
+      position: relative;
+      height: 40px;
+      background: #ddd;
+      border-radius: 20px;
+      margin: 0 20px;
+      overflow: hidden;
+    }
+    /* 🏁 Línia de meta */
+    .track-container::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #000 0,
+        #000 5px,
+        #fff 5px,
+        #fff 10px
+      );
+      border-radius: 0 20px 20px 0;
+    }
+
+    .car {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      transition: left 2s ease-in-out;
+    }
+    .points {
+      width: 50px;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    /* 🎊 Confeti */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 10px;
+      height: 10px;
+      background: red;
+      opacity: 0.9;
+      animation: fall 3s linear forwards;
+      z-index: 9999;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
-<<script>
-const sheetUrls = {
-  MINIMENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=248593049&single=true&output=csv',
-  MENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=0&single=true&output=csv',
-  PETITS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=283609274&single=true&output=csv',
-  MITJANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=134553576&single=true&output=csv',
-  GRANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=712554559&single=true&output=csv',
-  JOVES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=86703089&single=true&output=csv'
-};
-</script>
->
+<body>
+
+  <div class="banner"></div>
+
   <h1>🏁 Rànquing de la Cursa de Famílies 🏁</h1>
 
-  <button onclick="animateRace()">🏎️ Començar cursa</button>
+  <div id="menu">
+    <button onclick="loadGroup('MINIMENUTS')">MINIMENUTS</button>
+    <button onclick="loadGroup('MENUTS')">MENUTS</button>
+    <button onclick="loadGroup('PETITS')">PETITS</button>
+    <button onclick="loadGroup('MITJANS')">MITJANS</button>
+    <button onclick="loadGroup('GRANS')">GRANS</button>
+    <button onclick="loadGroup('JOVES')">JOVES</button>
+  </div>
+
+  <h2 id="groupTitle">MENUTS</h2>
+  <button onclick="startRace()">🏎️ Començar cursa</button>
+
   <div id="lanes"></div>
 
   <script>
+    // 📊 Enllaços públics (una pestanya per grup)
+    const sheetUrls = {
+      MINIMENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=248593049&single=true&output=csv',
+      MENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=0&single=true&output=csv',
+      PETITS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=283609274&single=true&output=csv',
+      MITJANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=134553576&single=true&output=csv',
+      GRANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=712554559&single=true&output=csv',
+      JOVES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=86703089&single=true&output=csv'
+    };
+
+    let currentGroup = 'MENUTS';
     let families = [];
+
     const lanesDiv = document.getElementById("lanes");
 
-    // 📊 Enllaç al vostre Google Sheet en format CSV
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?output=csv";
+    async function loadGroup(group) {
+      currentGroup = group;
+      document.getElementById("groupTitle").textContent = group;
+      document.querySelectorAll("#menu button").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      await loadFamilies();
+    }
 
     async function loadFamilies() {
+      const sheetUrl = sheetUrls[currentGroup];
       const resposta = await fetch(sheetUrl);
       const text = await resposta.text();
 
-      const files = text.trim().split("\n"); // línies
-      const headers = files[0].split(",");   // capçaleres
-
+      const files = text.trim().split("\n");
       families = files.slice(1).map(linea => {
         const [name, points, color] = linea.split(",");
         return {
@@ -99,7 +228,25 @@ const sheetUrls = {
       });
     }
 
-    // Carregar dades inicialment i refrescar cada 30s
+    function startRace() {
+      animateRace();
+      launchConfetti();
+    }
+
+    // 🎊 Confeti animat
+    function launchConfetti() {
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.animationDuration = 2 + Math.random() * 2 + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
+    // Carrega dades inicialment i refresca cada 30s
     loadFamilies();
     setInterval(loadFamilies, 30000);
   </script>
