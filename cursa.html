@@ -15,8 +15,18 @@
     button { display: block; margin: 0 auto 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
   </style>
 </head>
-<body>
-  <h1>🏁 Rànquing de la Cursa de Famílies - Menuts 🏁</h1>
+<<script>
+const sheetUrls = {
+  MINIMENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=248593049&single=true&output=csv',
+  MENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=0&single=true&output=csv',
+  PETITS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=283609274&single=true&output=csv',
+  MITJANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=134553576&single=true&output=csv',
+  GRANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=712554559&single=true&output=csv',
+  JOVES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=86703089&single=true&output=csv'
+};
+</script>
+>
+  <h1>🏁 Rànquing de la Cursa de Famílies 🏁</h1>
 
   <button onclick="animateRace()">🏎️ Començar cursa</button>
   <div id="lanes"></div>
@@ -95,3 +105,4 @@
   </script>
 </body>
 </html>
+
