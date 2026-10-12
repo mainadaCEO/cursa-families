@@ -164,30 +164,30 @@
   <h1>🏁 Rànquing de la Cursa de Famílies 🏁</h1>
 
   <div id="menu">
-    <button onclick="loadGroup('MINIMENUTS')">MINIMENUTS</button>
     <button onclick="loadGroup('MENUTS')">MENUTS</button>
     <button onclick="loadGroup('PETITS')">PETITS</button>
     <button onclick="loadGroup('MITJANS')">MITJANS</button>
     <button onclick="loadGroup('GRANS')">GRANS</button>
     <button onclick="loadGroup('JOVES')">JOVES</button>
+    <button onclick="loadGroup('FÒSSILS')">FÒSSILS</button>
   </div>
 
-  <h2 id="groupTitle">MENUTS</h2>
+  <h2 id="groupTitle">PETITS</h2>
   <button onclick="startRace()">🏎️ Començar cursa</button>
 
   <div id="lanes"></div>
 
   <script>
     const sheetUrls = {
-      MINIMENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=248593049&single=true&output=csv',
-      MENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=0&single=true&output=csv',
-      PETITS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=283609274&single=true&output=csv',
-      MITJANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=134553576&single=true&output=csv',
-      GRANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=712554559&single=true&output=csv',
-      JOVES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=86703089&single=true&output=csv'
+      MENUTS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=248593049&single=true&output=csv',
+      PETITS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=0&single=true&output=csv',
+      MITJANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=283609274&single=true&output=csv',
+      GRANS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=134553576&single=true&output=csv',
+      JOVES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=712554559&single=true&output=csv',
+      FÒSSILS: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTc4VPSmkvnbZcw6EcsPNmuYab7yJkUh6s3FTof1nUWZrL7BMd7SB8ECL5jaBTtS635wZH9iqlgpKQV/pub?gid=86703089&single=true&output=csv'
     };
 
-    let currentGroup = 'MENUTS';
+    let currentGroup = 'PETITS';
     let families = [];
 
     const lanesDiv = document.getElementById("lanes");
